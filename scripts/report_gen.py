@@ -82,7 +82,7 @@ def generate_ai_report(report_df):
                 {"role": "system", "content": "You are a helpful assistant for structural safety inspection."},
                 {"role": "user", "content": prompt}
             ],
-            max_completiontokens=1000
+            max_completion_tokens=1000
         )
         
         return response.choices[0].message.content
