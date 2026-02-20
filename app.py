@@ -20,6 +20,12 @@ status_placeholder = st.sidebar.empty()
 uploaded_file = st.file_uploader("드론 촬영 이미지를 업로드하세요", type=["jpg", "png", "jpeg"])
 
 if uploaded_file is not None:
+    # Reset AI report state if image changes
+    if 'last_uploaded_file' not in st.session_state or st.session_state['last_uploaded_file'] != uploaded_file.name:
+        st.session_state['last_uploaded_file'] = uploaded_file.name
+        if 'ai_report' in st.session_state:
+            del st.session_state['ai_report']
+
     # 1. Save uploaded file temporarily
     temp_path = os.path.join("data/images/val", uploaded_file.name)
     with open(temp_path, "wb") as f:
@@ -65,7 +71,16 @@ if uploaded_file is not None:
             if st.button("AI 보고서 생성하기"):
                 with st.spinner("AI가 보고서를 작성 중입니다..."):
                     ai_report = generate_ai_report(report_df)
-                    st.markdown(ai_report)
+                    st.session_state['ai_report'] = ai_report
+            
+            if 'ai_report' in st.session_state:
+                st.markdown(st.session_state['ai_report'])
+                st.download_button(
+                    label="AI 보고서 다운로드 (Markdown)",
+                    data=st.session_state['ai_report'],
+                    file_name='ai_inspection_report.md',
+                    mime='text/markdown'
+                )
                     
         else:
             st.write("탐지된 하자가 없습니다.")
