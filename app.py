@@ -15,6 +15,9 @@ st.markdown("---")
 st.sidebar.header("시스템 설정")
 model_path = st.sidebar.text_input("모델 경로", "models/best.pt")
 status_placeholder = st.sidebar.empty()
+# Ensure directories exist
+os.makedirs("data/images/val", exist_ok=True)
+os.makedirs("outputs", exist_ok=True)
 
 # Image Upload
 uploaded_file = st.file_uploader("드론 촬영 이미지를 업로드하세요", type=["jpg", "png", "jpeg"])

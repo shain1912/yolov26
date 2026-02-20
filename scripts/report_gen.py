@@ -77,7 +77,7 @@ def generate_ai_report(report_df):
         """
         
         response = client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-5-nano",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant for structural safety inspection."},
                 {"role": "user", "content": prompt}
