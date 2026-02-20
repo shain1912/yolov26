@@ -1,0 +1,8 @@
+path: .
+train: data/images/train
+val: data/images/val
+
+names:
+  0: crack
+  1: spalling
+  2: exposed_rebar
